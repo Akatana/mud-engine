@@ -1,0 +1,49 @@
+{
+    "name": "Vorikstedt Harbour",
+    "size": {
+        "width": 5,
+        "height": 2
+    },
+    "layout": [
+        "#-+-#",
+        "     "
+    ],
+    "zones": [
+        {
+            "pos": {
+                "x": 2,
+                "y": 1
+            },
+            "name": "Harbour Tavern",
+            "description": "Inside the tavern",
+            "items": [],
+            "npcs": [
+                {
+                    "name": "Barkeeper",
+                    "text": "Want a drink?",
+                    "description": "You see a grim looking man standing behind the bar"
+                }
+            ],
+            "enemies": [],
+            "exits": "South"
+        },
+        {
+            "pos": {
+                "x": 2,
+                "y": 0
+            },
+            "name": "In front of the tavern",
+            "description": "asdasd",
+            "items": [],
+            "npcs": [
+                {
+                    "name": "Barkeeper",
+                    "text": "Want a drink?",
+                    "description": "You see a grim looking man standing behind the bar"
+                }
+            ],
+            "enemies": [],
+            "exits": "South"
+        }
+    ]
+}
