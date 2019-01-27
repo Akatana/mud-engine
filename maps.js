@@ -33,10 +33,11 @@ module.exports = class Map {
                     var map = new Map(this.zones[i].level);
                     map.createMap();
                     var zone = map.getZone(this.zones[i].zone.x, this.zones[i].zone.y);
+                    zone.level = this.zones[i].level;
                     //Später überarbeiten
-                    this.map = map.map;
-                    this.zones = map.zones;
-                    this.name = map.name;
+                    //this.map = map.map;
+                    //this.zones = map.zones;
+                    //this.name = map.name;
                     return zone;
                 }
                 return this.zones[i];

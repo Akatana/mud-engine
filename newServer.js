@@ -67,5 +67,5 @@ function newSocket(socket) {
 var id = 0;
 var server = net.createServer(newSocket);
 
-// Listen on port 8888
+// Listen on port 7575
 server.listen(7575);

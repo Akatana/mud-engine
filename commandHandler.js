@@ -242,13 +242,13 @@ module.exports = class CommandHandler {
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "North"});
                     this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y+1);
+                    if (this.zone.level !== undefined) {
+                        this.map = new Map(this.zone.level);
+                        this.map.createMap();
+                    }
+                    this.character.pos.x = this.zone.pos.x;
+                    this.character.pos.y = this.zone.pos.y;
                     this.handler.emit('zoneEnterEvent', {char: this.character});
-                    for (var i = 0; i < this.map.zones.length; i++) {
-                        if (this.zone.pos == this.map.zones[i].pos) {
-                            this.character.pos = this.map.zones[i].pos;
-                        }
-                    }                  
-                    console.log(this.character.pos);
                     this.character.map = this.map.map;
                     this.printZoneInfo();
                 }
@@ -260,7 +260,12 @@ module.exports = class CommandHandler {
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "East"});
                     this.zone = this.map.getZone(this.character.pos.x+1, this.character.pos.y);
-                    this.character.pos.x++;
+                    if (this.zone.level !== undefined) {
+                        this.map = new Map(this.zone.level);
+                        this.map.createMap();
+                    }
+                    this.character.pos.x = this.zone.pos.x;
+                    this.character.pos.y = this.zone.pos.y;
                     this.character.map = this.map.name;
                     this.handler.emit('zoneEnterEvent', {char: this.character});
                     this.printZoneInfo();
@@ -273,7 +278,12 @@ module.exports = class CommandHandler {
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "South"});
                     this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y-1);
-                    this.character.pos.y--;
+                    if (this.zone.level !== undefined) {
+                        this.map = new Map(this.zone.level);
+                        this.map.createMap();
+                    }
+                    this.character.pos.x = this.zone.pos.x;
+                    this.character.pos.y = this.zone.pos.y;
                     this.character.map = this.map.name;
                     this.handler.emit('zoneEnterEvent', {char: this.character});
                     this.printZoneInfo();
@@ -286,7 +296,12 @@ module.exports = class CommandHandler {
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "West"});
                     this.zone = this.map.getZone(this.character.pos.x-1, this.character.pos.y);
-                    this.character.pos.x--;
+                    if (this.zone.level !== undefined) {
+                        this.map = new Map(this.zone.level);
+                        this.map.createMap();
+                    }
+                    this.character.pos.x = this.zone.pos.x;
+                    this.character.pos.y = this.zone.pos.y;
                     this.character.map = this.map.name;
                     this.handler.emit('zoneEnterEvent', {char: this.character});
                     this.printZoneInfo();
