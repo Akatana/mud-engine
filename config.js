@@ -3,6 +3,11 @@ const crypto = require('crypto');
 
 module.exports = class Config {
     
+    /**
+     * Creates an account for name with the password
+     * @param {*} name 
+     * @param {*} password 
+     */
     static createAccount(name, password) {
         var account = {
             name: null,
@@ -16,6 +21,13 @@ module.exports = class Config {
         fs.writeFileSync(`./data/accounts/${name}.json`, accountJSON, 'utf8');
     }
 
+    /**
+     * Creates a new character for the user
+     * @param {string} user 
+     * @param {string} charName 
+     * @param {string} charRace 
+     * @param {string} charClass 
+     */
     static createCharacter(user, charName, charRace, charClass) {
         //Push character to the user account
         var data = fs.readFileSync(`./data/accounts/${user}.json`, 'utf8');
@@ -94,6 +106,11 @@ module.exports = class Config {
         return character;
     }
 
+    /**
+     * Compares the password from the login with the one in the storage
+     * @param {string} name 
+     * @param {string} pass 
+     */
     static compPassword(name, pass) {
         var data = fs.readFileSync(`./data/accounts/${name}.json`, 'utf8');
         data = JSON.parse(data);
@@ -102,6 +119,10 @@ module.exports = class Config {
         return false;
     }
 
+    /**
+     * Checks if an account with this name already exists
+     * @param {string} name 
+     */
     static checkAccount(name) {
         if (fs.existsSync('./data/accounts/'+name+'.json')) {
             return true;
@@ -109,12 +130,20 @@ module.exports = class Config {
         return false;
     }
 
+    /**
+     * Returns the account data belonging to the account name
+     * @param {string} name 
+     */
     static getAccount(name) {
         var data = fs.readFileSync(`./data/accounts/${name}.json`, 'utf8');
         data = JSON.parse(data);
         return data;
     }
 
+    /**
+     * Loads all characters of the account specified by name from the storage
+     * @param {string} name 
+     */
     static getCharacters(name) {
         var chars = [];
         var data = fs.readFileSync(`./data/accounts/${name}.json`, 'utf8');
@@ -127,6 +156,11 @@ module.exports = class Config {
         return chars;
     }
 
+    /**
+     * Compares the attribute of the command and checks if it finds a fitting entity 
+     * @param {string} command 
+     * @param {string} entity 
+     */
     static compCommand(command, entity) {
         var args = command.toLowerCase();
         var name = entity.split(' ');
@@ -138,11 +172,19 @@ module.exports = class Config {
         return false;
     }
 
+    /**
+     * Saves the character to the character file
+     * @param {object} char 
+     */
     static saveCharacter(char) {
         var charJSON = JSON.stringify(char, null, 4);
         fs.writeFileSync(`./data/characters/${char.name}.json`, charJSON, 'utf8');
     }
 
+    /**
+     * Filters the text for color tags and replaces them with the correct color codes
+     * @param {string} text 
+     */
     static color(text) {
         if (text.includes('<red>') && text.includes('</red>')) {
             text = text.replace("<red>", "\x1B[31m");
@@ -171,6 +213,11 @@ module.exports = class Config {
         return text;
     }
 
+    /**
+     * Sends a broadcast message to every player on the server
+     * @param {object} sender 
+     * @param {string} message 
+     */
     static sendBroadcast(sender, message) {
         for (var i = 0; i < players.length; i++) {
             if (players[i].character.name != sender) {
@@ -181,6 +228,11 @@ module.exports = class Config {
         }
     }
 
+    /**
+     * Sends a private message to the player specified in message
+     * @param {object} sender 
+     * @param {string} message 
+     */
     static sendPrivateMessage(sender, message) {
         var messageTo = message[0];
         //Remove the reciever from the message
@@ -195,6 +247,11 @@ module.exports = class Config {
         }
     }
 
+    /**
+     * Sends a message to all players in the zone of the sender
+     * @param {object} sender 
+     * @param {string} message 
+     */
     static sendZoneMessage(sender, message) {
         //Get sender Map and Zone
         var map = sender.map;
