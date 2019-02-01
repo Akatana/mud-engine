@@ -329,7 +329,21 @@ module.exports = class CommandHandler {
                     Config.sendPrivateMessage(this.character, command);
                 }
             }
-            //TODO: who
+            //who
+            if (command[0].toLowerCase() == "who") {
+                if (command.length == 1) {
+                    this.print('There are currently <red>' + players.length + '</red> players playing on the server.');
+                } else if (command.length == 2) {
+                    let name = command[1];
+                    for (i = 0; i < players.length; i++) {
+                        if (Config.compCommand(players[i].character.name, name)) {
+                            this.print(players[i].character.name + ' is a ' + players[i].character.race + ' Level ' + players[i].character.level + ' ' + players[i].character.class);
+                        }
+                    } 
+                } else {
+                    this.print('Correct usage of the who command is either simply who or who <char name>');
+                }
+            }
             //TODO: friends add/delete
             //TODO: quest info/accept/abandon
         }
