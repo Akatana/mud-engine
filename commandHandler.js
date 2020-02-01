@@ -230,7 +230,7 @@ module.exports = class CommandHandler {
                 for (let i = 0; i < this.map.map.layout.length; i++) {
                     this.print('\r\n');
                     for (let j = 0; j < this.map.map.layout[i].length; j++) {
-                        if (i == this.character.pos.y && j == this.character.pos.y) {
+                        if (i == this.character.pos.y && j == this.character.pos.x) {
                             this.print('<magenta>@</magenta>');
                         } else {
                             this.print(this.map.map.layout[i][j]);
@@ -338,7 +338,7 @@ module.exports = class CommandHandler {
             //who
             if (command[0].toLowerCase() == "who") {
                 if (command.length == 1) {
-                    this.print('There are currently <red>' + players.length + '</red> players playing on the server.');
+                    this.print('There are currently <red>' + players.length + '</red> players playing on the server.\r\n');
                 } else if (command.length == 2) {
                     let name = command[1];
                     for (i = 0; i < players.length; i++) {
@@ -366,6 +366,12 @@ module.exports = class CommandHandler {
                     this.print("\r\nMap: " + this.character.map);
                     this.print("\r\nPosition: [" + this.character.pos.x + ', ' + this.character.pos.y + ']\r\n');
                 }
+            }
+            //Logout command
+            if (command[0].toLowerCase() == "logout" || command[0].toLowerCase() == "exit" || command[0].toLowerCase() == "quit") {
+                Config.saveCharacter(this.character);
+                this.print("Saved Character... Logging out.\r\n");
+                this.socket.destroy();
             }
             //TODO: friends add/delete
             //TODO: quest info/accept/abandon
