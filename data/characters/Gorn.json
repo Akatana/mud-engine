@@ -1,0 +1,52 @@
+{
+    "name": "Gorn",
+    "race": "Human",
+    "class": "Warrior",
+    "attributes": {
+        "health": {
+            "mod": 0,
+            "base": 0
+        },
+        "mana": {
+            "mod": 0,
+            "base": 0
+        },
+        "strength": {
+            "mod": 0,
+            "base": 0
+        },
+        "agility": {
+            "mod": 0,
+            "base": 0
+        },
+        "intellect": {
+            "mod": 0,
+            "base": 0
+        },
+        "wisdom": {
+            "mod": 0,
+            "base": 0
+        },
+        "armor": {
+            "mod": 0,
+            "base": 0
+        }
+    },
+    "level": 1,
+    "xp": 0,
+    "map": "Northshire",
+    "pos": {
+        "x": 3,
+        "y": 3
+    },
+    "inventory": {
+        "items": [],
+        "max": 8
+    },
+    "equipment": {},
+    "quests": {
+        "active": [],
+        "completed": []
+    },
+    "banned": false
+}

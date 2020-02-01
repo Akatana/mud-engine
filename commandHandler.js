@@ -2,19 +2,17 @@ const Map = require('./maps');
 const Config = require('./config');
 const Player = require('./player');
 const EventHandler = require('./eventHandler');
-global.players = [];
+
+//Actions importieren
+const WhoAction = require('./actions/who_action');
+const DebugAction = require('./actions/debug_action');
+const MapAction = require('./actions/map_action');
+const LogoutAction = require('./actions/logout_action');
 
 module.exports = class CommandHandler {
     constructor(socket) {
-        this.account = {
-            name: '',
-            pass: ''
-        },
-        this.character = {
-            name: '',
-            race: '',
-            class: ''
-        },
+        this.account = {};
+        this.character = {};
         this.handler = new EventHandler();
         this.player;
         this.socket = socket;
@@ -22,6 +20,7 @@ module.exports = class CommandHandler {
         this.map = null;
         this.zone = null;
         this.step = 0;
+        this.actionStack = [];
     }
 
     checkCommand(command) {
@@ -37,7 +36,7 @@ module.exports = class CommandHandler {
                 this.print('\r\n\r\nAccount:');
                 this.state = 'register';
             } else {
-                this.print('Wrong command');
+                this.print('\r\nWrong command');
             }
         }
         //Login process
@@ -227,18 +226,7 @@ module.exports = class CommandHandler {
             }
             //Map command
             if (command[0].toLowerCase() == "m" || command[0].toLowerCase() == "map") {
-                for (let i = 0; i < this.map.map.layout.length; i++) {
-                    this.print('\r\n');
-                    for (let j = 0; j < this.map.map.layout[i].length; j++) {
-                        if (i == this.character.pos.y && j == this.character.pos.x) {
-                            this.print('<magenta>@</magenta>');
-                        } else {
-                            this.print(this.map.map.layout[i][j]);
-                        }
-
-                    }
-                }
-                this.print('\r\n');
+                this.actionStack.push(new MapAction(this, []));
             }
             //Movement commands
             //North
@@ -337,42 +325,17 @@ module.exports = class CommandHandler {
             }
             //who
             if (command[0].toLowerCase() == "who") {
-                if (command.length == 1) {
-                    this.print('There are currently <red>' + players.length + '</red> players playing on the server.\r\n');
-                } else if (command.length == 2) {
-                    let name = command[1];
-                    for (i = 0; i < players.length; i++) {
-                        if (Config.compCommand(players[i].character.name, name)) {
-                            this.print(players[i].character.name + ' is a ' + players[i].character.race + ' Level ' + players[i].character.level + ' ' + players[i].character.class);
-                        }
-                    } 
-                } else {
-                    this.print('Correct usage of the who command is either simply who or who <char name>\r\n');
-                }
+                this.actionStack.push(new WhoAction(this, [command, Config]));
             }
             //Debug info
             if (command[0].toLowerCase() == "debug") {
-                if (this.account.admin == false) {
-                    this.print("You don't have access to this command.")
-                } else {
-                    //Console output
-                    console.log("Account:");
-                    console.log(this.account);
-                    console.log("Character:");
-                    console.log(this.character);
-                    //Ingame output
-                    this.print("\r\nAccount: " + this.account.name);
-                    this.print("\r\nCurrent Character: " + this.character.name);
-                    this.print("\r\nMap: " + this.character.map);
-                    this.print("\r\nPosition: [" + this.character.pos.x + ', ' + this.character.pos.y + ']\r\n');
-                }
+                this.actionStack.push(new DebugAction(this, []));
             }
             //Logout command
             if (command[0].toLowerCase() == "logout" || command[0].toLowerCase() == "exit" || command[0].toLowerCase() == "quit") {
-                Config.saveCharacter(this.character);
-                this.print("Saved Character... Logging out.\r\n");
-                this.socket.destroy();
+                this.actionStack.push(new LogoutAction(this, [Config]));
             }
+            //TODO: attack / kill
             //TODO: friends add/delete
             //TODO: quest info/accept/abandon
             //TODO: logout
@@ -395,7 +358,10 @@ module.exports = class CommandHandler {
         this.socket.write(Config.color(text));
     }
 
-    playerLogout(player) {
-
-    }
+    update() {
+        //Execute the commands queued
+        if (this.actionStack.length != 0) {
+            this.actionStack.pop().execute();
+        }
+    }   
 }

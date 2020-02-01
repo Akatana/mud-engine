@@ -1,7 +1,10 @@
 var net = require('net');
 var CommandHandler = require('./commandHandler');
 global.sockets = [];
- 
+global.activeZones = [];
+global.players = [];
+
+
 /*
  * Cleans the input of carriage return, newline
  */
@@ -44,7 +47,6 @@ function closeSocket(socket) {
 function newSocket(socket) {
     socket.id = id;
     id++;
-    sockets.push(socket);
     socket.write(
         '===============================================\r\n'+
         '|     Welcome to the MUD Serer of Geo         |\r\n'+
@@ -55,17 +57,26 @@ function newSocket(socket) {
         'or if you are a new player please type in (R)egister to create a new account and start playing.\r\n'
     );
     var commandHandler = new CommandHandler(socket);
+    socket.commandHandler = commandHandler;
 	socket.on('data', function(data) {
 		receiveData(socket, data, commandHandler);
 	})
 	socket.on('end', function() {
 		closeSocket(socket);
-	})
+    })
+    sockets.push(socket);
 }
  
 // Create a new server and provide a callback for when a connection occurs
 var id = 0;
 var server = net.createServer(newSocket);
+
+//Game Loop Initializazion
+setInterval(function() {
+    for (let i = 0; i < sockets.length; i++) {
+        sockets[i].commandHandler.update();
+    }
+}, 1000);
 
 // Listen on port 7575
 server.listen(7575);
