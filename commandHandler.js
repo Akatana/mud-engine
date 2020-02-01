@@ -197,9 +197,7 @@ module.exports = class CommandHandler {
             }
         }
         //Game state
-        else if (this.state == 'game') {
-            //Save Character => Improve this if this causes performance issues
-            Config.saveCharacter(this.character);
+        else if (this.state == 'game') {;
             //Split the commands to get the arguments
             var command = command.split(' ');
             //Talk command
@@ -257,7 +255,7 @@ module.exports = class CommandHandler {
                     this.character.pos.x = this.zone.pos.x;
                     this.character.pos.y = this.zone.pos.y;
                     this.handler.emit('zoneEnterEvent', {char: this.character});
-                    this.character.map = this.map.map;
+                    this.character.map = this.map.name;
                     this.printZoneInfo();
                 }
             } 
@@ -372,6 +370,9 @@ module.exports = class CommandHandler {
             //TODO: friends add/delete
             //TODO: quest info/accept/abandon
             //TODO: logout
+            
+            //Save Character => Improve this if this causes performance issues
+            Config.saveCharacter(this.character)
         }
     }
 
