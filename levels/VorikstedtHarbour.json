@@ -44,6 +44,18 @@
             ],
             "enemies": [],
             "exits": "South"
+        },
+        {
+            "pos": {
+                "x": 1,
+                "y": 0
+            },
+            "name": "mapChange",
+            "level": "Northshire",
+            "zone": {
+                "x": 3,
+                "y": 3
+            }
         }
     ]
 }

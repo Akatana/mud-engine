@@ -29,12 +29,12 @@ module.exports = class CommandHandler {
         if (this.state == 'startup') {
             if (command.toLowerCase() == "l" || command.toLowerCase() == "login") {
                 this.print('Please type in your existing Account name.');
-                this.print('\n\nAccount:');
+                this.print('\r\n\r\nAccount:');
                 this.state = 'login';
             } else if (command.toLowerCase() == "r" || command.toLowerCase() == "register") {
                 this.print('We are happy to have you as a new player. Please answer the following questions to get started.');
-                this.print('\nWhat is your account name?');
-                this.print('\n\nAccount:');
+                this.print('\r\nWhat is your account name?');
+                this.print('\r\n\r\nAccount:');
                 this.state = 'register';
             } else {
                 this.print('Wrong command');
@@ -46,28 +46,28 @@ module.exports = class CommandHandler {
                 if (command.toLowerCase() == "n" || command.toLowerCase() == "new") {
                     this.print('We are happy to have you as a new player. Please answer the following questions to get started.');
                     this.print('What is your account name?');
-                    this.print('\n\nAccount:');
+                    this.print('\r\n\r\nAccount:');
                     this.state = 'register';
                 } if (Config.checkAccount(command)) {
                     this.account.name = command;
                     this.print('What is your password? ');
-                    this.print('\n\nPassword:');
+                    this.print('\r\n\r\nPassword:');
                     this.step++;
                 } else {
                     this.print('This account does not exist.');
-                    this.print('\nYou can either try again or type in (N)ew to create a new account.');
-                    this.print('\n\nAccount:');
+                    this.print('\r\nYou can either try again or type in (N)ew to create a new account.');
+                    this.print('\r\n\r\nAccount:');
                 }
             } else if (this.step == 1) {
                 if (Config.compPassword(this.account.name, command)) {
                     this.account = Config.getAccount(this.account.name);
                     this.print('Welcome ' + this.account.name + '!');
-                    this.print('\nPress <enter> to go to the Character Select screen.');
+                    this.print('\r\nPress <enter> to go to the Character Select screen.');
                     this.step = 0;
                     this.state = 'charSelection';
                 } else {
                     this.print('This password is not correct, please try again.');
-                    this.print('\n\nPassword:');
+                    this.print('\r\n\r\nPassword:');
                 }
             }
         }
@@ -76,26 +76,26 @@ module.exports = class CommandHandler {
             if (this.step == 0) {
                 if (Config.checkAccount(command)) {
                     this.print('This account already exists. Please try again.');
-                    this.print('\n\nAccount:');
+                    this.print('\r\n\r\nAccount:');
                 } else {
                     this.account.name = command;
                     this.print('Please choose a password.')
-                    this.print('\n\nPassword:')
+                    this.print('\r\n\r\nPassword:')
                     this.step++;
                 }
             } else if (this.step == 1) {
                 this.account.pass = command;
                 this.print('Please repeat your password.')
-                this.print('\n\nPassword:')
+                this.print('\r\n\r\nPassword:')
                 this.step++;
             } else if (this.step == 2) {
                 if (this.account.pass == command) {
                     Config.createAccount(this.account.name, this.account.pass);
                     this.account = Config.getAccount(this.account.name);
                     this.print('Welcome ' + this.account.name + '!');
-                    this.print('\nCongratulations, your account has been created.');
-                    this.print('\nYour next step is to create a character to start your journey.');
-                    this.print('\nPress <enter> to go to the Character Select screen.');
+                    this.print('\r\nCongratulations, your account has been created.');
+                    this.print('\r\nYour next step is to create a character to start your journey.');
+                    this.print('\r\nPress <enter> to go to the Character Select screen.');
                     this.state = 'charSelection';
                     this.step = 0;
                 } else {
@@ -127,7 +127,7 @@ module.exports = class CommandHandler {
             } 
             else if (command[0].toLowerCase() == "n" || command[0].toLowerCase() == "new") {
                 this.print('Please choose a name for you character.');
-                this.print('\n\nName:');
+                this.print('\r\n\r\nName:');
                 this.state="characterCreation";
             }
             else if (command[0].toLowerCase() == "d" || command[0].toLowerCase() == "delete") {
@@ -137,29 +137,29 @@ module.exports = class CommandHandler {
                 this.socket.end();
             }
             else if (Config.getCharacters(this.account.name).length == 0) {
-                this.print('\n===========================================');
-                this.print("\n|     You don't have any characters yet   |");
-                this.print('\n===========================================');
-                this.print("\n| Available commands:                     |");
-                this.print("\n| (P)lay <char> => Start playing          |");
-                this.print("\n| (N)ew => Create a new character         |");
-                this.print("\n| (D)delete <char> => Deletes a character |");
-                this.print("\n| (L)ogout => Logs you out                |");
-                this.print('\n===========================================');
+                this.print('\r\n===========================================');
+                this.print("\r\n|     You don't have any characters yet   |");
+                this.print('\r\n===========================================');
+                this.print("\r\n| Available commands:                     |");
+                this.print("\r\n| (P)lay <char> => Start playing          |");
+                this.print("\r\n| (N)ew => Create a new character         |");
+                this.print("\r\n| (D)delete <char> => Deletes a character |");
+                this.print("\r\n| (L)ogout => Logs you out                |");
+                this.print('\r\n===========================================\r\n');
             } else {
-                this.print('\n===========================================');
+                this.print('\r\n===========================================');
                 for (var i = 0; i < Config.getCharacters(this.account.name).length; i++) {
-                    this.print(`\nName: ${Config.getCharacters(this.account.name)[i].name} | `);
+                    this.print(`\r\nName: ${Config.getCharacters(this.account.name)[i].name} | `);
                     this.print(`Class: ${Config.getCharacters(this.account.name)[i].class} | `);
                     this.print(`Level: ${Config.getCharacters(this.account.name)[i].level}`);
                 }
-                this.print('\n===========================================');
-                this.print("\n| Available commands:                     |");
-                this.print("\n| (P)lay <char> => Start playing          |");
-                this.print("\n| (N)ew => Create a new character         |");
-                this.print("\n| (D)delete <char> => Deletes a character |");
-                this.print("\n| (L)ogout => Logs you out                |");
-                this.print('\n===========================================');
+                this.print('\r\n===========================================');
+                this.print("\r\n| Available commands:                     |");
+                this.print("\r\n| (P)lay <char> => Start playing          |");
+                this.print("\r\n| (N)ew => Create a new character         |");
+                this.print("\r\n| (D)delete <char> => Deletes a character |");
+                this.print("\r\n| (L)ogout => Logs you out                |");
+                this.print('\r\n===========================================\r\n');
             }
         }
         //Character creation
@@ -167,21 +167,21 @@ module.exports = class CommandHandler {
             if (this.step == 0) {
                 this.character.name = command;
                 this.print('The Misthaven MUD houses a wide variety of races, please choose carefully.');
-                this.print('\nTo get more information about the different races enter: info <number>');
-                this.print('\nThere are the following races, to choose one simply enter the corresponding number:');
-                this.print('\n1) Human');
-                this.print('\n2) Dwarf');
-                this.print('\n3) Giant');
-                this.print('\n4) Troll');
+                this.print('\r\nTo get more information about the different races enter: info <number>');
+                this.print('\r\nThere are the following races, to choose one simply enter the corresponding number:');
+                this.print('\r\n1) Human');
+                this.print('\r\n2) Dwarf');
+                this.print('\r\n3) Giant');
+                this.print('\r\n4) Troll\r\n');
                 this.step++;
             } else if (this.step == 1) {
                 this.character.race = 'Human';
                 this.print(`You choosed the ${this.character.race} race.`); 
-                this.print('\nPlease choose your class now. Just like before you can use the info command to gain further information about the class');
-                this.print('\n1) Warrior');
-                this.print('\n2) Runecaster');
-                this.print('\n3) Thief');
-                this.print('\n4) Bard');
+                this.print('\r\nPlease choose your class now. Just like before you can use the info command to gain further information about the class');
+                this.print('\r\n1) Warrior');
+                this.print('\r\n2) Runecaster');
+                this.print('\r\n3) Thief');
+                this.print('\r\n4) Bard\r\n');
                 this.step++;
             } else if (this.step == 2) {
                 if (command == '1') {
@@ -189,9 +189,9 @@ module.exports = class CommandHandler {
                 }
                 this.character = Config.createCharacter(this.account.name, this.character.name, this.character.race, this.character.class);
                 this.print('You choosed ' + this.character.name + ' as your character name.');
-                this.print('\nYou choosed ' + this.character.race + ' as your race.');
-                this.print('\nYou choosed ' + this.character.class + ' as your class.');
-                this.print('\nPlease hit <enter> to return to the character selection');
+                this.print('\r\nYou choosed ' + this.character.race + ' as your race.');
+                this.print('\r\nYou choosed ' + this.character.class + ' as your class.');
+                this.print('\r\nPlease hit <enter> to return to the character selection');
                 this.state = 'charSelection';
                 this.step = 0;
             }
@@ -205,11 +205,11 @@ module.exports = class CommandHandler {
             //Talk command
             if (command[0].toLowerCase() == 'talk' && command.length > 1 && command.length <= 2) {
                 if (Config.compCommand(command[1], this.zone.npcs[0].name)) {
-                    this.print('\n'+this.zone.npcs[0].text);
+                    this.print('\r\n'+this.zone.npcs[0].text);
                 }
             } else if (command[0].toLowerCase() == 'talk' && command.length > 2) {
-                this.print('\nIncorrect usage of the talk command.');
-                this.print('\nCorrect syntax: talk <npc name>');
+                this.print('\r\nIncorrect usage of the talk command.');
+                this.print('\r\nCorrect syntax: talk <npc name>');
             }
             //Look command 
             if (command[0].toLowerCase() == 'look'  && command.length <= 2) {
@@ -229,19 +229,27 @@ module.exports = class CommandHandler {
             }
             //Map command
             if (command[0].toLowerCase() == "m" || command[0].toLowerCase() == "map") {
-                console.log(this.map.map.layout);
-                for (var i = 0; i < this.map.map.layout.length; i++) {
-                    this.print('\n'+this.map.map.layout[i]);
+                for (let i = 0; i < this.map.map.layout.length; i++) {
+                    this.print('\r\n');
+                    for (let j = 0; j < this.map.map.layout[i].length; j++) {
+                        if (i == this.character.pos.y && j == this.character.pos.y) {
+                            this.print('<magenta>@</magenta>');
+                        } else {
+                            this.print(this.map.map.layout[i][j]);
+                        }
+
+                    }
                 }
+                this.print('\r\n');
             }
             //Movement commands
             //North
             if (command[0].toLowerCase() == "n" || command[0].toLowerCase() == "north") {
-                if (this.map.getZone(this.character.pos.x, this.character.pos.y+1) == false) {
-                    this.print('You can not go this way!');
+                if (this.map.getZone(this.character.pos.x, this.character.pos.y-1) == false) {
+                    this.print('You can not go this way!\r\n');
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "North"});
-                    this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y+1);
+                    this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y-1);
                     if (this.zone.level !== undefined) {
                         this.map = new Map(this.zone.level);
                         this.map.createMap();
@@ -256,7 +264,7 @@ module.exports = class CommandHandler {
             //East
             else if (command[0].toLowerCase() == "e" || command[0].toLowerCase() == "east") {
                 if (this.map.getZone(this.character.pos.x+1, this.character.pos.y) == false) {
-                    this.print('You can not go this way!');
+                    this.print('You can not go this way!\r\n');
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "East"});
                     this.zone = this.map.getZone(this.character.pos.x+1, this.character.pos.y);
@@ -273,11 +281,11 @@ module.exports = class CommandHandler {
             } 
             //South
             else if (command[0].toLowerCase() == "s" || command[0].toLowerCase() == "south") {
-                if (this.map.getZone(this.character.pos.x, this.character.pos.y-1) == false) {
-                    this.print('You can not go this way!');
+                if (this.map.getZone(this.character.pos.x, this.character.pos.y+1) == false) {
+                    this.print('You can not go this way!\r\n');
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "South"});
-                    this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y-1);
+                    this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y+1);
                     if (this.zone.level !== undefined) {
                         this.map = new Map(this.zone.level);
                         this.map.createMap();
@@ -292,7 +300,7 @@ module.exports = class CommandHandler {
             //West
             else if (command[0].toLowerCase() == "w" || command[0].toLowerCase() == "west") {
                 if (this.map.getZone(this.character.pos.x-1, this.character.pos.y) == false) {
-                    this.print('You can not go this way!');
+                    this.print('You can not go this way!\r\n');
                 } else {
                     this.handler.emit('zoneLeftEvent', {char: this.character, dir: "West"});
                     this.zone = this.map.getZone(this.character.pos.x-1, this.character.pos.y);
@@ -341,19 +349,39 @@ module.exports = class CommandHandler {
                         }
                     } 
                 } else {
-                    this.print('Correct usage of the who command is either simply who or who <char name>');
+                    this.print('Correct usage of the who command is either simply who or who <char name>\r\n');
+                }
+            }
+            //Debug info
+            if (command[0].toLowerCase() == "debug") {
+                if (this.account.admin == false) {
+                    this.print("You don't have access to this command.")
+                } else {
+                    //Console output
+                    console.log("Account:");
+                    console.log(this.account);
+                    console.log("Character:");
+                    console.log(this.character);
+                    //Ingame output
+                    this.print("\r\nAccount: " + this.account.name);
+                    this.print("\r\nCurrent Character: " + this.character.name);
+                    this.print("\r\nMap: " + this.character.map);
+                    this.print("\r\nPosition: [" + this.character.pos.x + ', ' + this.character.pos.y + ']\r\n');
                 }
             }
             //TODO: friends add/delete
             //TODO: quest info/accept/abandon
+            //TODO: logout
         }
     }
 
     printZoneInfo() {
-        this.print('\n<green>' + this.zone.name + '</green>');
-        this.print('\n\n' + this.zone.description);
-        this.print('\n\nYou can see the following NPCs: ' + this.zone.npcs[0].name);
-        this.print('\nExits: ' + this.zone.exits);
+        this.print('\r\n<green>' + this.zone.name + '</green>');
+        this.print('\r\n\r\n' + this.zone.description);
+        if (this.zone.npcs.length != 0) { 
+            this.print('\r\n\r\nYou can see the following NPCs: ' + this.zone.npcs[0].name);
+        }
+        this.print('\r\nExits: ' + this.zone.exits + '\r\n');
     }
 
     print(text) {

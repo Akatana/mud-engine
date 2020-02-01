@@ -46,13 +46,13 @@ function newSocket(socket) {
     id++;
     sockets.push(socket);
     socket.write(
-        '===============================================\n'+
-        '|     Welcome to the MUD Serer of Geo         |\n'+
-        '===============================================\n'
+        '===============================================\r\n'+
+        '|     Welcome to the MUD Serer of Geo         |\r\n'+
+        '===============================================\r\n'
     );
     socket.write(
         'If you already have an account please type in (L)ogin to login into your existing account '+
-        'or if you are a new player please type in (R)egister to create a new account and start playing.\n'
+        'or if you are a new player please type in (R)egister to create a new account and start playing.\r\n'
     );
     var commandHandler = new CommandHandler(socket);
 	socket.on('data', function(data) {

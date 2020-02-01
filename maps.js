@@ -40,6 +40,7 @@ module.exports = class Map {
                     //this.name = map.name;
                     return zone;
                 }
+                console.log(this.zones[i])
                 return this.zones[i];
             } 
         }

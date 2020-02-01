@@ -14,6 +14,7 @@ module.exports = class Config {
             characters: [],
             password: null,
             banned: false,
+            admin: false
         }
         account.name = name;
         account.password = crypto.createHash('md5').update(password).digest("hex");

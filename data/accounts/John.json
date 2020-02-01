@@ -1,0 +1,11 @@
+{
+    "name": "John",
+    "characters": [
+        {
+            "name": "Gronk"
+        }
+    ],
+    "password": "a7d5f2e539723ab4e6d71de987c6566f",
+    "banned": false,
+    "admin": true
+}
