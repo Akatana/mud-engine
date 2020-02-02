@@ -8,6 +8,9 @@ const WhoAction = require('./actions/who_action');
 const DebugAction = require('./actions/debug_action');
 const MapAction = require('./actions/map_action');
 const LogoutAction = require('./actions/logout_action');
+const MoveAction = require('./actions/move_action');
+const WhisperAction = require('./actions/whisper_action');
+const TalkAction = require('./actions/talk_action');
 
 module.exports = class CommandHandler {
     constructor(socket) {
@@ -200,14 +203,9 @@ module.exports = class CommandHandler {
             //Split the commands to get the arguments
             var command = command.split(' ');
             //Talk command
-            if (command[0].toLowerCase() == 'talk' && command.length > 1 && command.length <= 2) {
-                if (Config.compCommand(command[1], this.zone.npcs[0].name)) {
-                    this.print('\r\n'+this.zone.npcs[0].text);
-                }
-            } else if (command[0].toLowerCase() == 'talk' && command.length > 2) {
-                this.print('\r\nIncorrect usage of the talk command.');
-                this.print('\r\nCorrect syntax: talk <npc name>');
-            }
+            if (command[0].toLowerCase() == 'talk') {
+                this.actionStack.push(new TalkAction(this, [command, Config]));
+            } 
             //Look command 
             if (command[0].toLowerCase() == 'look'  && command.length <= 2) {
                 //Look at the current zone
@@ -231,75 +229,19 @@ module.exports = class CommandHandler {
             //Movement commands
             //North
             if (command[0].toLowerCase() == "n" || command[0].toLowerCase() == "north") {
-                if (this.map.getZone(this.character.pos.x, this.character.pos.y-1) == false) {
-                    this.print('You can not go this way!\r\n');
-                } else {
-                    this.handler.emit('zoneLeftEvent', {char: this.character, dir: "North"});
-                    this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y-1);
-                    if (this.zone.level !== undefined) {
-                        this.map = new Map(this.zone.level);
-                        this.map.createMap();
-                    }
-                    this.character.pos.x = this.zone.pos.x;
-                    this.character.pos.y = this.zone.pos.y;
-                    this.handler.emit('zoneEnterEvent', {char: this.character});
-                    this.character.map = this.map.name;
-                    this.printZoneInfo();
-                }
+                this.actionStack.push(new MoveAction(this, ['n']));
             } 
             //East
             else if (command[0].toLowerCase() == "e" || command[0].toLowerCase() == "east") {
-                if (this.map.getZone(this.character.pos.x+1, this.character.pos.y) == false) {
-                    this.print('You can not go this way!\r\n');
-                } else {
-                    this.handler.emit('zoneLeftEvent', {char: this.character, dir: "East"});
-                    this.zone = this.map.getZone(this.character.pos.x+1, this.character.pos.y);
-                    if (this.zone.level !== undefined) {
-                        this.map = new Map(this.zone.level);
-                        this.map.createMap();
-                    }
-                    this.character.pos.x = this.zone.pos.x;
-                    this.character.pos.y = this.zone.pos.y;
-                    this.character.map = this.map.name;
-                    this.handler.emit('zoneEnterEvent', {char: this.character});
-                    this.printZoneInfo();
-                }
+                this.actionStack.push(new MoveAction(this, ['e']));
             } 
             //South
             else if (command[0].toLowerCase() == "s" || command[0].toLowerCase() == "south") {
-                if (this.map.getZone(this.character.pos.x, this.character.pos.y+1) == false) {
-                    this.print('You can not go this way!\r\n');
-                } else {
-                    this.handler.emit('zoneLeftEvent', {char: this.character, dir: "South"});
-                    this.zone = this.map.getZone(this.character.pos.x, this.character.pos.y+1);
-                    if (this.zone.level !== undefined) {
-                        this.map = new Map(this.zone.level);
-                        this.map.createMap();
-                    }
-                    this.character.pos.x = this.zone.pos.x;
-                    this.character.pos.y = this.zone.pos.y;
-                    this.character.map = this.map.name;
-                    this.handler.emit('zoneEnterEvent', {char: this.character});
-                    this.printZoneInfo();
-                }
+                this.actionStack.push(new MoveAction(this, ['s']));
             } 
             //West
             else if (command[0].toLowerCase() == "w" || command[0].toLowerCase() == "west") {
-                if (this.map.getZone(this.character.pos.x-1, this.character.pos.y) == false) {
-                    this.print('You can not go this way!\r\n');
-                } else {
-                    this.handler.emit('zoneLeftEvent', {char: this.character, dir: "West"});
-                    this.zone = this.map.getZone(this.character.pos.x-1, this.character.pos.y);
-                    if (this.zone.level !== undefined) {
-                        this.map = new Map(this.zone.level);
-                        this.map.createMap();
-                    }
-                    this.character.pos.x = this.zone.pos.x;
-                    this.character.pos.y = this.zone.pos.y;
-                    this.character.map = this.map.name;
-                    this.handler.emit('zoneEnterEvent', {char: this.character});
-                    this.printZoneInfo();
-                }
+                this.actionStack.push(new MoveAction(this, ['w']));
             }
             //Broadcast
             if (command[0].toLowerCase() == "say") {
@@ -313,15 +255,7 @@ module.exports = class CommandHandler {
             }
             //whisper
             if (command[0].toLowerCase() == "whisper") {
-                if (command.length == 1) {
-                    this.print('Correct usage of the whisper command: whisper <name> <message>');
-                } else if (command.length == 2) {
-                    this.print('Correct usage of the whisper command: whisper <name> <message>');
-                } else {
-                    //Remove the command from the message
-                    command.splice(0, 1);
-                    Config.sendPrivateMessage(this.character, command);
-                }
+                this.actionStack.push(new WhisperAction(this, [command, Config]));
             }
             //who
             if (command[0].toLowerCase() == "who") {

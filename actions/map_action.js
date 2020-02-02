@@ -1,6 +1,6 @@
 const Action = require('./action');
 
-module.exports = class mapAction extends Action {
+module.exports = class MapAction extends Action {
     execute() {
         for (let i = 0; i < this.commandHandler.map.map.layout.length; i++) {
             this.commandHandler.print('\r\n');

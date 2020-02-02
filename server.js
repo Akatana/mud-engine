@@ -76,7 +76,7 @@ setInterval(function() {
     for (let i = 0; i < sockets.length; i++) {
         sockets[i].commandHandler.update();
     }
-}, 1000);
+}, 100);
 
 // Listen on port 7575
 server.listen(7575);
