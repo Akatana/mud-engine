@@ -6,6 +6,6 @@ module.exports = class LogoutAction extends Action {
         
         this.config.saveCharacter(this.commandHandler.character);
         this.commandHandler.print("Saved Character... Logging out.\r\n");
-        this.commandHandler.socket.destroy();
+        this.commandHandler.player.logout();
     }
 }

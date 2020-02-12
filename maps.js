@@ -1,6 +1,5 @@
 var Zone = require('./zone');
 var fs = require('fs');
-var inspect = require('util').inspect;
 
 module.exports = class Map {
 
@@ -11,10 +10,21 @@ module.exports = class Map {
     }
 
     createMap() {
-        var data = fs.readFileSync(`./levels/${this.map}.json`, 'utf8');
-        this.map = JSON.parse(data);
-        this.name = this.map.name
-        this.createZones();
+        let isLoaded = false;
+        worldHandler.getMaps().forEach(map => {
+            if (map.name == this.map) {
+                isLoaded = true;
+                this.map = map.map;
+                this.name = map.name;
+                this.createZones();
+            }
+        });
+        if (isLoaded == false) {
+            var data = fs.readFileSync(`./levels/${this.map}.json`, 'utf8');
+            this.map = JSON.parse(data);
+            this.name = this.map.name;
+            this.createZones();
+        }
     }
 
     createZones() {

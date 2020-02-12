@@ -43,7 +43,7 @@ module.exports = class MoveAction extends Action {
             }
             this.commandHandler.character.pos.x = this.commandHandler.zone.pos.x;
             this.commandHandler.character.pos.y = this.commandHandler.zone.pos.y;
-            this.commandHandler.handler.emit('zoneEnterEvent', {char: this.commandHandler.character});
+            this.commandHandler.handler.emit('zoneEnterEvent', {char: this.commandHandler.character, zone: this.commandHandler.zone});
             this.commandHandler.character.map = this.commandHandler.map.name;
             this.commandHandler.printZoneInfo();
         }

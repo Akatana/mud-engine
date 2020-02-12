@@ -10,6 +10,11 @@ module.exports = class DebugAction extends Action {
             console.log(this.commandHandler.account);
             console.log("Character:");
             console.log(this.commandHandler.character);
+            console.log("Map:");
+            console.log(worldHandler.getMap(this.commandHandler.map.name));
+            console.log("Zone:");
+            console.log(worldHandler.getMap(this.commandHandler.map.name).getZone(this.commandHandler.character.pos.x, this.commandHandler.character.pos.y));
+
             //Ingame output
             this.commandHandler.print("\r\nAccount: " + this.commandHandler.account.name);
             this.commandHandler.print("\r\nCurrent Character: " + this.commandHandler.character.name);

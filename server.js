@@ -1,7 +1,8 @@
-var net = require('net');
-var CommandHandler = require('./commandHandler');
+const net = require('net');
+const CommandHandler = require('./commandHandler');
+const WorldHandler = require('./worldHandler');
 global.sockets = [];
-global.activeZones = [];
+global.worldHandler = [];
 global.players = [];
 
 
@@ -77,6 +78,10 @@ setInterval(function() {
         sockets[i].commandHandler.update();
     }
 }, 100);
+
+//Initialize World Handler
+worldHandler = new WorldHandler();
+worldHandler.init();
 
 // Listen on port 7575
 server.listen(7575);

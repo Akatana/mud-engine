@@ -6,13 +6,14 @@ module.exports = class Zone {
             this.level = zone.level;
             this.zone = zone.zone;
         } else {
-        this.pos = zone.pos;
-        this.name = zone.name;
-        this.description = zone.description;
-        this.items = zone.items;
-        this.npcs = zone.npcs;
-        this.enemies = zone.enemies;
-        this.exits = zone.exits;
+            this.pos = zone.pos;
+            this.name = zone.name;
+            this.description = zone.description;
+            this.items = zone.items;
+            this.npcs = zone.npcs;
+            this.enemies = zone.enemies;
+            this.exits = zone.exits;
+            this.players = [];
         }
     }
 
@@ -26,7 +27,7 @@ module.exports = class Zone {
         }
     }
 
-    createEnemies() {
+    addEnemies() {
 
     }
 
@@ -34,8 +35,20 @@ module.exports = class Zone {
 
     }
 
+    addPlayer(name) {
+        this.players.push(name);
+    }
+
+    removePlayer(name) {
+        let index = this.players.indexOf(name);
+        if (index > -1) {
+            this.players.splice(index, 1);
+        }
+    }
+
     //Getters
     getDescription() {
         return this.description;
     }
+
 }
