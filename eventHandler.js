@@ -14,7 +14,7 @@ module.exports = class EventHandler {
             for (var i = 0; i < players.length; i++) {
                 if (players[i].character.name != data.char.name) {
                     if (map == players[i].character.map && pos.x == players[i].character.pos.x && pos.y == players[i].character.pos.y) {
-                        players[i].socket.write(Config.color(`<magenta>${data.char.name} left the area to the ${data.dir}!</magenta>`));
+                        players[i].socket.write(Config.color(`<magenta>${data.char.name} left the area to the ${data.dir}!</magenta>\r\n`));
                     }
                 }
             }
@@ -30,7 +30,7 @@ module.exports = class EventHandler {
             for (var i = 0; i < players.length; i++) {
                 if (players[i].character.name != data.char.name) {
                     if (map == players[i].character.map && pos.x == players[i].character.pos.x && pos.y == players[i].character.pos.y) {
-                        players[i].socket.write(Config.color(`<magenta>${data.char.name} entered the area.</magenta>`));
+                        players[i].socket.write(Config.color(`<magenta>${data.char.name} entered the area.</magenta>\r\n`));
                     }
                 }
             }

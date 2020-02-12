@@ -280,12 +280,28 @@ module.exports = class CommandHandler {
     }
 
     printZoneInfo() {
-        this.print('\r\n<green>' + this.zone.name + '</green>');
-        this.print('\r\n\r\n' + this.zone.description);
-        if (this.zone.npcs.length != 0) { 
-            this.print('\r\n\r\nYou can see the following NPCs: ' + this.zone.npcs[0].name);
+        var zoneInfo = worldHandler.getMap(this.map.name).getZone(this.character.pos.x, this.character.pos.y);
+        this.print('\r\n<green>' + zoneInfo.name + '</green>');
+        this.print('\r\n' + zoneInfo.description);
+        //Display NPC's
+        if (zoneInfo.npcs.length > 0) { 
+            this.print('\r\nYou can see the following NPCs: ' + zoneInfo.npcs[0].name);
         }
-        this.print('\r\nExits: ' + this.zone.exits + '\r\n');
+        //Display Players 
+        if (zoneInfo.players.length > 0){
+            let printed = false;
+            for (let player of zoneInfo.players) {
+                if (player != this.character.name) {
+                    //Workaround for now...
+                    if (printed == false) {
+                        printed = true;
+                        this.print('\r\nYou can see the following Players: ');
+                    } 
+                    this.print(player + ' ');
+                } 
+            } 
+        } 
+        this.print('\r\nExits: ' + zoneInfo.exits + '\r\n');
     }
 
     print(text) {
