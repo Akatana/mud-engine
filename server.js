@@ -39,7 +39,6 @@ function closeSocket(socket) {
     if (j != -1) {
         players.splice(j, 1);
     }
-    console.log(players);
 }
  
 /*
@@ -72,16 +71,16 @@ function newSocket(socket) {
 var id = 0;
 var server = net.createServer(newSocket);
 
+//Initialize World Handler
+worldHandler = new WorldHandler();
+worldHandler.init();
+
 //Game Loop Initializazion
 setInterval(function() {
     for (let i = 0; i < sockets.length; i++) {
         sockets[i].commandHandler.update();
     }
 }, 100);
-
-//Initialize World Handler
-worldHandler = new WorldHandler();
-worldHandler.init();
 
 // Listen on port 7575
 server.listen(7575);

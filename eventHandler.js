@@ -26,7 +26,7 @@ module.exports = class EventHandler {
             //Get sender Map and Zone
             var map = data.char.map;
             var pos = data.char.pos;
-            var zone = data.zone;
+            
             for (var i = 0; i < players.length; i++) {
                 if (players[i].character.name != data.char.name) {
                     if (map == players[i].character.map && pos.x == players[i].character.pos.x && pos.y == players[i].character.pos.y) {
