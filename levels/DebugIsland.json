@@ -20,13 +20,7 @@
             "name": "NPC and Vendor Hall",
             "description": "You are staying in long hall filled to the brim with all kinds of NPC's",
             "items": [],
-            "npcs": [
-                {
-                    "name": "Item Vendor",
-                    "text": "Hello adventurer!",
-                    "description": "You see a grim looking man standing behind a table."
-                }
-            ],
+            "npcs": [1],
             "enemies": [],
             "exits": "East, South"
         },
@@ -74,7 +68,7 @@
             "name": "Piece of Land",
             "description": "A small piece of land",
             "items": [],
-            "npcs": [],
+            "npcs": [1],
             "enemies": [],
             "exits": "North, East, South, West"
         },

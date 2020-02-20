@@ -20,7 +20,7 @@ module.exports = class Map {
             }
         });
         if (isLoaded == false) {
-            var data = fs.readFileSync(`./levels/${this.map}.json`, 'utf8');
+            let data = fs.readFileSync(`./levels/${this.map}.json`, 'utf8');
             this.map = JSON.parse(data);
             this.name = this.map.name;
             this.createZones();
@@ -35,7 +35,7 @@ module.exports = class Map {
         }       
     }
 
-    getZone(x, y) {
+    getZone(x, y, z = 0) {
         for (var i = 0; i < this.zones.length; i++) {
             if (this.zones[i].pos.x == x && this.zones[i].pos.y == y) {
                 //Check if a map change happens
@@ -44,10 +44,6 @@ module.exports = class Map {
                     map.createMap();
                     var zone = map.getZone(this.zones[i].zone.x, this.zones[i].zone.y);
                     zone.level = this.zones[i].level;
-                    //Später überarbeiten
-                    //this.map = map.map;
-                    //this.zones = map.zones;
-                    //this.name = map.name;
                     return zone;
                 }
                 return this.zones[i];

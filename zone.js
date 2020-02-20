@@ -1,3 +1,5 @@
+var Mob = require('./entities/mob');
+
 module.exports = class Zone {
     constructor (zone) {
         if (zone.name == 'mapChange') {
@@ -10,7 +12,7 @@ module.exports = class Zone {
             this.name = zone.name;
             this.description = zone.description;
             this.items = zone.items;
-            this.npcs = zone.npcs;
+            this.npcs = this.createNpcs(zone);
             this.enemies = zone.enemies;
             this.exits = zone.exits;
             this.players = [];
@@ -21,10 +23,12 @@ module.exports = class Zone {
 
     }
 
-    createNpcs() {
-        for (var i = 0; i < this.npcs.length; i++) {
-
+    createNpcs(zone) {
+        let mobs = []
+        for (var i = 0; i < zone.npcs.length; i++) {
+            mobs.push(new Mob(zone.npcs[i]));
         }
+        return mobs;
     }
 
     addEnemies() {

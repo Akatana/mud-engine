@@ -284,8 +284,8 @@ module.exports = class CommandHandler {
         this.print('\r\n<green>' + zoneInfo.name + '</green>');
         this.print('\r\n' + zoneInfo.description);
         //Display NPC's
-        if (zoneInfo.npcs.length > 0) { 
-            this.print('\r\nYou can see the following NPCs: ' + zoneInfo.npcs[0].name);
+        for (let npc of zoneInfo.npcs) {
+            this.print('\r\nYou can see the following NPCs: ' + npc.name);
         }
         //Display Players 
         if (zoneInfo.players.length > 0){
@@ -309,6 +309,11 @@ module.exports = class CommandHandler {
     }
 
     update() {
+        //Update the current Zone
+        if (this.state == 'game') {
+            this.zone = worldHandler.getMap(this.map.name).getZone(this.character.pos.x, this.character.pos.y);
+        }
+
         //Execute the commands queued
         if (this.actionStack.length != 0) {
             this.actionStack.pop().execute();

@@ -1,0 +1,11 @@
+{
+    "id": 1,
+    "name": "Floating Spirit",
+    "description": "You see a floating Spirit gliding through the air.", 
+    "dialogue": [
+        "Hello there!",
+        "It's very nice to meet you... I have been waiting for you for a looong time",
+        "Please help me to get out of here!"
+    ],
+    "moveSet": ["N", "E", "S", "W"]
+}
