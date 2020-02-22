@@ -31,4 +31,10 @@ module.exports = class WorldHandler {
         });
         return returnMap;
     }
+
+    update() {
+        for (let map of this.maps) {
+            map.update();
+        }
+    }
 }

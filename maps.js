@@ -51,4 +51,10 @@ module.exports = class Map {
         }
         return false;
     }
+
+    update() {
+        for (let zone of this.zones) {
+            zone.update();
+        }
+    }
 }

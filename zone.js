@@ -7,6 +7,7 @@ module.exports = class Zone {
             this.pos = zone.pos;
             this.level = zone.level;
             this.zone = zone.zone;
+            this.npcs = [];
         } else {
             this.pos = zone.pos;
             this.name = zone.name;
@@ -55,4 +56,9 @@ module.exports = class Zone {
         return this.description;
     }
 
+    update() {
+        for (let npc of this.npcs) {
+            npc.update();
+        }
+    }
 }

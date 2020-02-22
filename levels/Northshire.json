@@ -20,13 +20,7 @@
             "name": "Old cathedral",
             "description": "You are staying in front of an old cathedral in the middle of the forest.",
             "items": [],
-            "npcs": [
-                {
-                    "name": "Major Tom",
-                    "text": "Hello adventurer!",
-                    "description": "You see a grim looking man standing in front of a cathedral"
-                }
-            ],
+            "npcs": [1],
             "enemies": [],
             "exits": "North, East, South, West"
         },
@@ -38,13 +32,7 @@
             "name": "Inside the cathedral",
             "description": "You are staying inside a cathedral",
             "items": [],
-            "npcs": [
-                {
-                    "name": "Priest Judas",
-                    "text": "Hello my boy! How can I help you?",
-                    "description": "You see a Priest in his Robes"
-                }
-            ],
+            "npcs": [1],
             "enemies": [],
             "exits": "North, East, South, West"
         }

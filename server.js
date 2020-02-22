@@ -77,6 +77,9 @@ worldHandler.init();
 
 //Game Loop Initializazion
 setInterval(function() {
+    //Update the world Handler
+    worldHandler.update();
+    //Update Players
     for (let i = 0; i < sockets.length; i++) {
         sockets[i].commandHandler.update();
     }

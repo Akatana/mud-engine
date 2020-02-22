@@ -6,8 +6,11 @@ module.exports = class TalkAction extends Action {
         this.config = this.data[1];
         
         if (this.command.length > 1) {
-            if (this.config.compCommand(this.command[1], this.commandHandler.zone.npcs[0].name)) {
-                this.commandHandler.print('\r\n'+this.commandHandler.zone.npcs[0].text);
+            let zone = this.commandHandler.zone;
+            for (let npc of zone.npcs) {
+                if (this.config.compCommand(this.command[1], npc.name)) {
+                    npc.talkTo(this.commandHandler);
+                }
             }
         } else {
             this.commandHandler.print('\r\nIncorrect usage of the talk command.');

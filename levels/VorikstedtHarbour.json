@@ -17,13 +17,7 @@
             "name": "Harbour Tavern",
             "description": "Inside the tavern",
             "items": [],
-            "npcs": [
-                {
-                    "name": "Barkeeper",
-                    "text": "Want a drink?",
-                    "description": "You see a grim looking man standing behind the bar"
-                }
-            ],
+            "npcs": [1],
             "enemies": [],
             "exits": "South"
         },
@@ -35,13 +29,7 @@
             "name": "In front of the tavern",
             "description": "asdasd",
             "items": [],
-            "npcs": [
-                {
-                    "name": "Barkeeper",
-                    "text": "Want a drink?",
-                    "description": "You see a grim looking man standing behind the bar"
-                }
-            ],
+            "npcs": [1],
             "enemies": [],
             "exits": "South"
         },
