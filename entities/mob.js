@@ -35,7 +35,7 @@ module.exports = class Mob {
                 this.dialogueStack[i].dialogueID++;
             }
             this.dialogueStack[i].ticks--;
-            if (this.dialogueStack[i].dialogueID == this.dialogue.length) {
+            if (this.dialogueStack[i].dialogueID > this.dialogue.length) {
                 this.dialogueStack.splice(i, 1);
                 i--;
             }
