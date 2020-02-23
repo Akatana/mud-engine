@@ -30,7 +30,7 @@ module.exports = class Map {
     createZones() {
         //name, description, items, npcs, enemies, exits
         for (var i = 0; i < this.map.zones.length; i++) {
-            var zone = new Zone(this.map.zones[i]);
+            var zone = new Zone(this.map.zones[i], this.name);
             this.zones.push(zone);
         }       
     }

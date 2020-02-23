@@ -7,5 +7,5 @@
         "It's very nice to meet you... I have been waiting for you for a looong time",
         "Please help me to get out of here!"
     ],
-    "moveSet": ["N", "E", "S", "W"]
+    "moveSet": ["E", "S", "W", "N"]
 }

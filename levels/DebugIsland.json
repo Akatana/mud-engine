@@ -68,7 +68,7 @@
             "name": "Piece of Land",
             "description": "A small piece of land",
             "items": [],
-            "npcs": [1],
+            "npcs": [],
             "enemies": [],
             "exits": "North, East, South, West"
         },

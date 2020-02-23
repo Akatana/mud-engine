@@ -1,7 +1,7 @@
 var Mob = require('./entities/mob');
 
 module.exports = class Zone {
-    constructor (zone) {
+    constructor (zone, level) {
         if (zone.name == 'mapChange') {
             this.name = zone.name;
             this.pos = zone.pos;
@@ -10,6 +10,7 @@ module.exports = class Zone {
             this.npcs = [];
         } else {
             this.pos = zone.pos;
+            this.level = level;
             this.name = zone.name;
             this.description = zone.description;
             this.items = zone.items;
@@ -26,10 +27,24 @@ module.exports = class Zone {
 
     createNpcs(zone) {
         let mobs = []
+        //Weird Javascript behavior when passing this.pos directly...
+        let pos = {'x': this.pos.x, 'y': this.pos.y};
         for (var i = 0; i < zone.npcs.length; i++) {
-            mobs.push(new Mob(zone.npcs[i]));
+            mobs.push(new Mob(zone.npcs[i], pos, this.level));
         }
         return mobs;
+    }
+
+    addNpc(mob) {
+        this.npcs.push(mob);
+    }
+
+    removeNpc(id) {
+        for (let i = 0; i < this.npcs.length; i++) {
+            if (this.npcs[i].id == id) {
+                this.npcs.splice(i, 1);
+            }
+        }
     }
 
     addEnemies() {
