@@ -18,6 +18,10 @@ function cleanInput(data) {
  */
 function receiveData(socket, data, commandHandler) {
     var cleanData = cleanInput(data);
+    if (data == "useClient") {
+        commandHandler.setClient();
+        return;
+    }
     commandHandler.checkCommand(cleanData);
 }
  
@@ -49,11 +53,11 @@ function newSocket(socket) {
     id++;
     socket.write(
         '===============================================\r\n'+
-        '|     Welcome to the MUD Serer of Geo         |\r\n'+
+        '|     Welcome to the MUD Server of Geo        |\r\n'+
         '===============================================\r\n'
     );
     socket.write(
-        'If you already have an account please type in (L)ogin to login into your existing account '+
+        'If you already have an account please type in (L)ogin to login into your existing account\r\n'+
         'or if you are a new player please type in (R)egister to create a new account and start playing.\r\n'
     );
     var commandHandler = new CommandHandler(socket);

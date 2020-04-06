@@ -24,6 +24,7 @@ module.exports = class CommandHandler {
         this.zone = null;
         this.step = 0;
         this.actionStack = [];
+        this.client = false;
     }
 
     checkCommand(command) {
@@ -46,29 +47,29 @@ module.exports = class CommandHandler {
         else if (this.state == 'login') {
             if (this.step == 0) {
                 if (command.toLowerCase() == "n" || command.toLowerCase() == "new") {
-                    this.print('We are happy to have you as a new player. Please answer the following questions to get started.');
-                    this.print('What is your account name?');
+                    this.print('\r\nWe are happy to have you as a new player. Please answer the following questions to get started.');
+                    this.print('\r\nWhat is your account name?');
                     this.print('\r\n\r\nAccount:');
                     this.state = 'register';
                 } if (Config.checkAccount(command)) {
                     this.account.name = command;
-                    this.print('What is your password? ');
+                    this.print('\r\nWhat is your password? ');
                     this.print('\r\n\r\nPassword:');
                     this.step++;
                 } else {
-                    this.print('This account does not exist.');
+                    this.print('\r\nThis account does not exist.');
                     this.print('\r\nYou can either try again or type in (N)ew to create a new account.');
                     this.print('\r\n\r\nAccount:');
                 }
             } else if (this.step == 1) {
                 if (Config.compPassword(this.account.name, command)) {
                     this.account = Config.getAccount(this.account.name);
-                    this.print('Welcome ' + this.account.name + '!');
+                    this.print('\r\nWelcome ' + this.account.name + '!');
                     this.print('\r\nPress <enter> to go to the Character Select screen.');
                     this.step = 0;
                     this.state = 'charSelection';
                 } else {
-                    this.print('This password is not correct, please try again.');
+                    this.print('\r\nThis password is not correct, please try again.');
                     this.print('\r\n\r\nPassword:');
                 }
             }
@@ -77,24 +78,24 @@ module.exports = class CommandHandler {
         else if (this.state === 'register') {
             if (this.step == 0) {
                 if (Config.checkAccount(command)) {
-                    this.print('This account already exists. Please try again.');
+                    this.print('\r\nThis account already exists. Please try again.');
                     this.print('\r\n\r\nAccount:');
                 } else {
                     this.account.name = command;
-                    this.print('Please choose a password.')
+                    this.print('\r\nPlease choose a password.')
                     this.print('\r\n\r\nPassword:')
                     this.step++;
                 }
             } else if (this.step == 1) {
                 this.account.pass = command;
-                this.print('Please repeat your password.')
+                this.print('\r\nPlease repeat your password.')
                 this.print('\r\n\r\nPassword:')
                 this.step++;
             } else if (this.step == 2) {
                 if (this.account.pass == command) {
                     Config.createAccount(this.account.name, this.account.pass);
                     this.account = Config.getAccount(this.account.name);
-                    this.print('Welcome ' + this.account.name + '!');
+                    this.print('\r\nWelcome ' + this.account.name + '!');
                     this.print('\r\nCongratulations, your account has been created.');
                     this.print('\r\nYour next step is to create a character to start your journey.');
                     this.print('\r\nPress <enter> to go to the Character Select screen.');
@@ -304,11 +305,19 @@ module.exports = class CommandHandler {
         this.print('\r\nExits: ' + zoneInfo.exits + '\r\n');
     }
 
+    setClient() {
+        this.client = true;
+    }
+
     print(text) {
         this.socket.write(Config.color(text));
     }
 
     update() {
+        //Transmit client data
+        if (this.client) {
+            console.log("test");
+        }
         //Update the current Zone
         if (this.state == 'game') {
             this.zone = worldHandler.getMap(this.map.name).getZone(this.character.pos.x, this.character.pos.y);
@@ -319,4 +328,12 @@ module.exports = class CommandHandler {
             this.actionStack.pop().execute();
         }
     }   
+
+    sendClientData() {
+        let data = {};
+        //Set Map data
+        for (let i = 0; i < this.map.map.layout.length; i++) {
+            data.map.push()
+        }
+    }
 }
